@@ -4,10 +4,10 @@ from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.appconfig import AppConfig
 
-def create_app(configfile=None):
+def create_app(configfile=None, default_settings=True):
     app = Flask(__name__)
     # Configure app
-    AppConfig(app, configfile)
+    AppConfig(app, configfile=configfile, default_settings=default_settings)
     # Open db model
     from greidinet.model import db
     db.init_app(app)
