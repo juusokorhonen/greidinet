@@ -4,6 +4,8 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+db = SQLAlchemy()
+
 class Entry(db.Model):
     """Represents a climbed route."""
     # id 
@@ -17,10 +19,6 @@ class Entry(db.Model):
     route = db.relationship('Route',
             backref=db.backref('entries', lazy='dynamic'))
 
-    def __init__(self, user, route):
-        self.route = route
-        self.user = user
-
     def __repr__(self):
         return '<Entry %s : %s>' % (self.user, self.route)
 
@@ -29,13 +27,9 @@ class User(db.Model):
     # id
     id = db.Column(db.Integer, primary_key=True)
     # username
-    username = db.Column(db.String(256), unique=True)
+    username = db.Column(db.String(256), primary_key=True)
     # full name
     name = db.Column(db.String(2048))
-
-    def __init__(self, username, name):
-        self.username = username
-        self.name = name
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -55,10 +49,6 @@ class Route(db.Model):
     location = db.relationship('Location',
             backref=db.backref('routes', lazy='dynamic'))
 
-    def __init__(self, name, location, sector=None):
-        self.name = name
-        self.location = location
-
     def __repr__(self):
         return '<Route %r on %r>' % (self.name, self.location)
 
@@ -73,10 +63,6 @@ class Location(db.Model):
     category = db.relationship('Category',
             backref=db.backref('locations', lazy='dynamic'))
     
-    def __init__(self, name, category):
-        self.name = name
-        self.category = category
-
     def __repr__(self):
         return '<Location %r (%r)>' % (self.name, self.category)
 
@@ -86,9 +72,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # name
     name = db.Column(db.String(2048), unique=True)
-
-    def __init__(self, name):
-        self.name = name
 
     def __repr__(self):
         return '<Category %r>' % self.name
@@ -100,12 +83,9 @@ class Grade(db.Model):
     # name
     name = db.Column(db.String(128), unique=True)
     # grade type
-    gradetype_id = db.Column(db.Integer, db.ForeignKey('gradetype.id'))
-    gradetype = db.relationship('GradeType'
+    gradetype_id = db.Column(db.Integer, db.ForeignKey('grade_type.id'))
+    gradetype = db.relationship('GradeType',
             backref=db.backref('grades', lazy='dynamic'))
-
-    def __init__(self, name):
-        self.name = name
 
     def __repr__(self):
         return '<Grade %r>' % self.name
@@ -117,8 +97,15 @@ class GradeType(db.Model):
     # name
     name = db.Column(db.String(2048), unique=True)
 
-    def __init__(self, name):
-        self.name = name
-
     def __repr__(self):
         return '<GradeType %r>' % self.name
+
+
+if __name__ == "__main__":
+    db.create_all()
+    manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
+
+    manager.create_api(Grade, methods=['GET', 'POST',' DELETE'])
+    manager.create_api(GradeType, methods=['GET', 'POST', 'DELETE'])
+
+    app.run()
