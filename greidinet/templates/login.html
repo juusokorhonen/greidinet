@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block contentbody %}
+	<h2>Login</h2>
+
+	<form class="form-inline" role="form">
+	{% for field in form %}
+		{% field.type == 'StringField' or field.type == 'PasswordField' %}
+			<div class="form-group">
+				{{ field.label(class='sr-only') }}
+				{{ field(class='form-control') }}
+			</div>
+		{% elif field.type == 'BooleanField' %}
+			<div class="checkbox">
+				<label>
+					{{ field }} Remember me
+				</label>
+			</div>
+		{% elif field.type == 'SubmitField' %}
+			{{ field(class='btn btn-default') }}
+		{% endif %}
+	{% endfor %}
+	</form>
+
+{% endblock %}
+

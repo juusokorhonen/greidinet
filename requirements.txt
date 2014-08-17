@@ -3,3 +3,6 @@ flask-sqlalchemy
 flask-appconfig
 flask-bootstrap
 flask-Restless
+flask-login
+flask-wtf
+wtforms

@@ -30,6 +30,8 @@ class User(db.Model):
     username = db.Column(db.String(256), primary_key=True)
     # full name
     name = db.Column(db.String(2048))
+    # active state
+    active = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<User %r>' % self.username
