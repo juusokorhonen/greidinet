@@ -24,8 +24,6 @@ class Entry(db.Model):
 
 class User(db.Model):
     """Represents a climber."""
-    # id
-    id = db.Column(db.Integer, primary_key=True)
     # username
     username = db.Column(db.String(256), primary_key=True)
     # full name

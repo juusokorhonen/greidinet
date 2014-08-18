@@ -43,22 +43,21 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Greidi.net</a>
+				<a class="navbar-brand" href="#">Greidinet</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="">
-						<a href="#portfolio">Portfolio</a>
+						<a href="#">Portfolio</a>
 					</li>
 					<li class="">
-						<a href="#about">About</a>
+						<a href="#">About</a>
 					</li>
-					<li class="">
-						<a href="#contact">Contact</a>
+					<li class="admin">
+						<a href="#">Admin</a>
 					</li>
 				{% if loginform %}
-					<li><a href="#">Sign up</a></li>
 					<li class="dropdown" id="navbar-login-dropdown">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign in <span class="caret"></span></a>
 						<div class="dropdown-menu" role="menu">
@@ -73,6 +72,7 @@
 										</div>
 									{% elif field.type == 'SubmitField' %}
 										{{ field(class="btn btn-default input-sm") }}
+										<small>or <a href="#">Register</a></small>
 									{% elif field.type == 'StringField' or field.type == 'PasswordField' %}
 										{{ field(class="form-control input-sm", placeholder=field.label.text) }}
 									{% endif %}
@@ -88,27 +88,6 @@
 {% endblock navbar %}
 
 {% block content %}
-{% block header %}
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-									<img class="img-responsive" src="{{ url_for('static', filename='img/profile.png') }}" alt="">
-                    <div class="intro-text">
-                        <span class="name">Start Bootstrap</span>
-                        <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
-                    </div>
-                </div>
-				          <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-{% endblock header %}
-
 {% block flashes %}
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -130,26 +109,39 @@
     {% endwith %}
 {% endblock flashes %}
 
+{% block header %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">Greidinet</span>
+                        <span class="skills">The place to log your climbing routes and follow your current grade!</span>
+                    </div>
+                </div>
+				          <div class="col-lg-8 col-lg-offset-2 text-center">
+										<a href="#" role="button" class="btn btn-lg btn-outline"><span class="glyphicon glyphicon-hand-up"></span> Start logging!</a> <br /> <small>(it's free)</small>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
 {% block sections %}
     <!-- About Section -->
     <section id="about">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
+                <div class="col-md-12 text-center">
                     <h2>About</h2>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+                <div class="col-md-4 col-md-offset-2">
+                    <p>Greidinet started from the need to keep track of what was my current climbing "grade". It is meant to provide a simple and friendly user interface for logging routes you have climbed.</p>
                 </div>
-                <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
+                <div class="col-md-4">
+                    <p>We do not aim to be a resource on routes, climbing videos, or how to make good coffee, yet a simple log book for climbers.</p>
                 </div>
             </div>
         </div>
@@ -184,7 +176,8 @@
 {% block footer_below %}
                 <div class="row">
                     <div class="col-lg-12">
-                    	<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png"></a><br>The content of this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
+											<p>The content of this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+											<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png"></a></p>
 											<p>The use of the data posted by the users is limited to this site only.</p>
 										</div>
                 </div>

@@ -19,7 +19,7 @@ class LoginUser(User, UserMixin):
 
 @login_manager.user_loader
 def load_user(username):
-    user = LoginUser.query.filter_by(username=username).first()
+    user = LoginUser.query.(username)
     return user
 
 class LoginForm(Form):
@@ -36,10 +36,21 @@ def login():
     form = LoginForm()
     if (form.validate_on_submit()):
         # Login and validate the user
-        abort(501) 
+        if not login_user():
+            flash(u"Log in failed. Check you username and password.", 'error')
+            return render_template('login.html', form=form)
+        return redirect(request.args.get("next") or url_for('index')
     try:
         return render_template('login.html', form=form)
     except TemplateNotFound:
         abort(501)
 
-    
+class SignupForm(Form):
+
+
+@logingui.route('/signup')
+def signup():
+    try:
+        return render_template('signup.html', form=form)
+    except TemplateNotFound:
+        abort(501)
